@@ -33,5 +33,21 @@ namespace JetStreamBackend.Service
             return mitarbeiter?.Rolle;
         }
 
+        public async Task<Mitarbeiter> UpdateLastLoginAsync(string benutzername, DateTime lastLogin)
+        {
+            var mitarbeiter = await _context.Mitarbeiter.FirstOrDefaultAsync(m => m.Benutzername == benutzername);
+            if (mitarbeiter == null)
+            {
+                return null;
+            }
+
+            mitarbeiter.LetzteAnmeldung = lastLogin;
+            await _context.SaveChangesAsync();
+
+            return mitarbeiter;
+        }
+
+
+
     }
 }

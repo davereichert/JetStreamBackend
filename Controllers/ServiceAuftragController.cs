@@ -24,7 +24,7 @@ namespace JetStreamBackend.Controllers
         }
 
         [HttpGet]
-        // Stellt sicher, dass dieser Endpoint eine Authentifizierung benötigt
+        [Authorize]
         public async Task<ActionResult<IEnumerable<ServiceAuftrag>>> GetAuftraege()
         {
             return await _serviceAuftragService.GetAuftraegeAsync();

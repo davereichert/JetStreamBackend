@@ -37,5 +37,11 @@ namespace JetStreamBackend.Models
 
 
     }
+    public class LastLoginModel
+    {
+        [JsonPropertyName("lastLogin")]
+        public DateTime LastLogin { get; set; }
+    }
+
 
 }

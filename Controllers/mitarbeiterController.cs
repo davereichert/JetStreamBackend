@@ -42,7 +42,27 @@ namespace JetStreamBackend.Controllers
                 }
                 return Ok(rolle);
             }
-        }
- }
+
+            [HttpPut("{benutzername}/lastLogin")]
+            public async Task<IActionResult> UpdateLastLogin(string benutzername, [FromBody] LastLoginModel model)
+            {
+                try
+                {
+                    var mitarbeiter = await _mitarbeiterService.UpdateLastLoginAsync(benutzername, model.LastLogin);
+                    if (mitarbeiter == null)
+                    {
+                        return NotFound();
+                    }
+
+                    return Ok(mitarbeiter);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest("Fehler beim Aktualisieren des letzten Logins: " + ex.Message);
+                }
+            }
+
+    }
+}
 
 

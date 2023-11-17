@@ -29,6 +29,7 @@ builder.Services.AddAuthentication(x =>
 builder.Services.AddScoped<JetStreamBackend.Service.ServiceAuftragService>();
 builder.Services.AddScoped<JetStreamBackend.Service.MitarbeiterService>();
 
+
 builder.Services.AddControllers();
 
 // Registriere deinen DbContext
@@ -50,7 +51,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowLocalhostDevelopment",
         builder =>
         {
-            builder.WithOrigins("http://127.0.0.1:5500") // Ersetze PORT mit dem Port deines Frontend-Servers
+            builder.WithOrigins("https://localhost:7106") // Ersetze PORT mit dem Port deines Frontend-Servers
                    .AllowAnyHeader()
                    .AllowAnyMethod();
         });
@@ -68,6 +69,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 
 app.UseCors("AllowLocalhostDevelopment");
 
