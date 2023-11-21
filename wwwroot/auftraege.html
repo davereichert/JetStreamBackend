@@ -29,6 +29,12 @@
     </nav>
     <div class="container mt-4">
         <h2>Auftragsliste</h2>
+        <div class="text-center mb-3">
+            <button class="btn btn-primary" onclick="filtereAuftraege('standard')">Standard</button>
+            <button class="btn btn-success" onclick="filtereAuftraege('express')">Express</button>
+            <button class="btn btn-danger" onclick="filtereAuftraege('tief')">Tief</button>
+            <button class="btn btn-secondary" onclick="zeigeAuftraege()">Alle anzeigen</button>
+        </div>
         <table class="table">
             <thead>
                 <tr>
@@ -40,11 +46,10 @@
                     <th>Service</th>
                     <th>Erstellungsdatum</th>
                     <th>Abholdatum</th>
-                    <!-- Weitere Spalten nach Bedarf -->
+
                 </tr>
             </thead>
             <tbody id="auftragsTabelle">
-                <!-- Aufträge werden hier eingefügt -->
             </tbody>
         </table>
     </div>

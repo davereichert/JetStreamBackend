@@ -22,6 +22,19 @@ namespace JetStreamBackend.Service
         {
             return await _context.ServiceAuftraege.ToListAsync();
         }
+
+        public async Task DeleteAuftragAsync(int id)
+        {
+            var auftrag = await _context.ServiceAuftraege.FindAsync(id);
+            if (auftrag == null)
+            {
+                throw new Exception("Auftrag nicht gefunden.");
+            }
+
+            _context.ServiceAuftraege.Remove(auftrag);
+            await _context.SaveChangesAsync();
+        }
+
     }
 
 }

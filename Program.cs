@@ -3,8 +3,17 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Serilog;
+
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
+    .ReadFrom.Configuration(hostingContext.Configuration)
+    .Enrich.FromLogContext());
+
+
+
 
 var key = Encoding.ASCII.GetBytes("ilhsdofhnfeudjsdjliuuejdklssahsdmWfd");
 
@@ -56,6 +65,7 @@ builder.Services.AddCors(options =>
                    .AllowAnyMethod();
         });
 });
+
 
 
 var app = builder.Build();

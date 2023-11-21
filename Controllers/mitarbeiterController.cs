@@ -2,8 +2,7 @@
 using System.Threading.Tasks;
 using JetStreamBackend.Models;
 using JetStreamBackend.Service;
-using global::JetStreamBackend.Models;
-using global::JetStreamBackend.Service;
+
 
 namespace JetStreamBackend.Controllers
 {
@@ -12,10 +11,12 @@ namespace JetStreamBackend.Controllers
         public class MitarbeiterController : ControllerBase
         {
             private readonly MitarbeiterService _mitarbeiterService;
+            
 
             public MitarbeiterController(MitarbeiterService mitarbeiterService)
             {
                 _mitarbeiterService = mitarbeiterService;
+                
             }
 
             [HttpPost]
@@ -24,10 +25,12 @@ namespace JetStreamBackend.Controllers
                 try
                 {
                     await _mitarbeiterService.CreateMitarbeiterAsync(mitarbeiter);
+                    
                     return Ok("Mitarbeiter wurde erfolgreich hinzugefügt.");
                 }
                 catch (Exception ex)
                 {
+                    
                     return BadRequest("Fehler beim Hinzufügen des Mitarbeiters: " + ex.Message);
                 }
             }
@@ -38,8 +41,10 @@ namespace JetStreamBackend.Controllers
                 var rolle = _mitarbeiterService.GetRolleVonBenutzer(benutzername);
                 if (rolle == null)
                 {
+                    
                     return NotFound();
                 }
+                
                 return Ok(rolle);
             }
 
@@ -51,9 +56,10 @@ namespace JetStreamBackend.Controllers
                     var mitarbeiter = await _mitarbeiterService.UpdateLastLoginAsync(benutzername, model.LastLogin);
                     if (mitarbeiter == null)
                     {
+                        
                         return NotFound();
                     }
-
+                    
                     return Ok(mitarbeiter);
                 }
                 catch (Exception ex)
