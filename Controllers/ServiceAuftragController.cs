@@ -35,7 +35,6 @@ namespace JetStreamBackend.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<ActionResult<IEnumerable<ServiceAuftrag>>> GetAuftraege()
         {
             try
@@ -50,6 +49,27 @@ namespace JetStreamBackend.Controllers
                 return StatusCode(500, "Ein interner Fehler ist aufgetreten");
             }
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<IEnumerable<ServiceAuftrag>>> GetAuftraeg(int id)
+        {
+            try
+            {
+                var auftraeg = await _serviceAuftragService.GetAuftraegAsync(id);
+                if (auftraeg == null)
+                {
+                    return NotFound("Kein Auftrag mit dieser id");
+                }
+                _logger.LogInformation("Kein Fehler beim Abrufen des Auftrages");
+                return Ok(auftraeg);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Fehler beim Abrufen der Aufträge");
+                return StatusCode(500, "Ein interner Fehler ist aufgetreten");
+            }
+        }
+
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAuftrag(int id)
