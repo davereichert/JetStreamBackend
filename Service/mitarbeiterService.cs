@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using JetStreamBackend.Models;
+﻿using JetStreamBackend.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace JetStreamBackend.Service
@@ -46,6 +44,8 @@ namespace JetStreamBackend.Service
 
             return mitarbeiter;
         }
+
+       
 
 
 

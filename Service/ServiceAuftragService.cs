@@ -35,6 +35,25 @@ namespace JetStreamBackend.Service
             await _context.SaveChangesAsync();
         }
 
+        public async Task<ServiceAuftrag> UpdateAuftragAsync(int id, ServiceAuftrag auftrag)
+        {
+            var vorhandenerAuftrag = await _context.ServiceAuftraege.FindAsync(id);
+            if (vorhandenerAuftrag == null)
+            {
+                throw new Exception("Auftrag nicht gefunden.");
+            }
+
+            vorhandenerAuftrag.KundenName = auftrag.KundenName;
+            vorhandenerAuftrag.Email = auftrag.Email;
+            vorhandenerAuftrag.Phone = auftrag.Phone;
+            vorhandenerAuftrag.Priority = auftrag.Priority;
+            vorhandenerAuftrag.Service = auftrag.Service;
+            vorhandenerAuftrag.SendDate = auftrag.SendDate;
+
+            await _context.SaveChangesAsync();
+            return vorhandenerAuftrag;
+        }
+
     }
 
 }

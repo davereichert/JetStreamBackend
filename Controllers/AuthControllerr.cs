@@ -24,12 +24,26 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Login([FromBody] LoginModel login)
     {
         var user = await _context.Mitarbeiter
-            .FirstOrDefaultAsync(u => u.Benutzername == login.Username && u.Passwort == login.Password);
-
-        if (user == null)
+            .FirstOrDefaultAsync(u => u.Benutzername == login.Username);
+        if (user == null || user.IstGesperrt)
         {
-            return Unauthorized();
+            return Unauthorized("Benutzer nicht gefunden doer gespert wende dich an einen mitarbeiter");
         }
+
+        if(login.Password != user.Passwort)
+        {
+            user.LoginVersuche++;
+            if(user.LoginVersuche >= 3) {
+                user.IstGesperrt = true;
+                
+            
+            }
+            await _context.SaveChangesAsync();
+            return Unauthorized("Falsches Passwort");
+        }
+
+        user.LoginVersuche = 0;
+        await _context.SaveChangesAsync();
 
         var token = GenerateJwtToken(user.Benutzername);
 

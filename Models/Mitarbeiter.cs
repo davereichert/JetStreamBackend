@@ -35,6 +35,9 @@ namespace JetStreamBackend.Models
         [JsonPropertyName("lastLogin")]
         public DateTime LetzteAnmeldung { get; set; }
 
+        public int LoginVersuche { get; set; } = 0;
+        public bool IstGesperrt { get; set; } = false;
+
 
     }
     public class LastLoginModel

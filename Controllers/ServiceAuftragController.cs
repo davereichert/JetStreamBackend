@@ -67,6 +67,23 @@ namespace JetStreamBackend.Controllers
             }
         }
 
+        [HttpPut("{id}")]
+        [Authorize]
+        public async Task<IActionResult> Put(int id, [FromBody] ServiceAuftrag auftrag)
+        {
+            try
+            {
+                var aktualisierterAuftrag = await _serviceAuftragService.UpdateAuftragAsync(id, auftrag);
+                _logger.LogInformation("ServiceAuftrag aktualisiert: {AuftragId}", aktualisierterAuftrag.Id);
+                return Ok(aktualisierterAuftrag);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Fehler beim Aktualisieren des ServiceAuftrags: {AuftragId}", id);
+                return BadRequest("Ein Fehler ist aufgetreten");
+            }
+        }
+
     }
 
 }
